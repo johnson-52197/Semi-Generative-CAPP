@@ -1,87 +1,93 @@
-import ast
+#@title Default title text
 import math
+import ast
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 from operator import itemgetter
 from prettytable import PrettyTable
 
+
+if __name__ == "__main__":
+  window = tk.Tk()
+
+  window.title("PROCESS PLANNING ASSIGNMENT")
+
+  canvas = tk.Canvas(window, height=700, width=800)
+  canvas.pack()
+
+  frame = tk.Frame(window, bg='#50c878')
+  frame.place(relx=0.01, rely=0.19, relwidth=0.98, relheight=0.8)
+
+  label = tk.Label(window, text="CAPP ")
+  label.config(font=("Ariel",70))
+  label.place(relx=.5,rely=.1, anchor='center')
+
+  label1 = tk.Label(window, text = r"(COMPUTER AIDED PROCESS PLANNING - Generative Type)")
+  label1.place(relx=.5,rely=0.175, anchor='center')
+
+  label_code = tk.Label(frame, text="Component Code : ", bg='#50c878', anchor='n')
+  label_code.place(relx=0.01, rely=0.02)
+
+  code_entry = tk.Entry(frame, font = 40)
+  code_entry.config(font=("Ariel"))
+  code_entry.place(relwidth = 0.65, relheight=0.05, relx=0.25, rely=0.01,)
+
+  w_var = StringVar(window)
+  w_materials = {'Low Cabon Steel','Medium Carbon Steel', 'Steel Alloy', 'Grey Cast Iron'
+              ,'Stainless Steel','Chromium nickel','Aluminuim','Brass','Plastic'}
+  w_var.set('Low Carbon Steel')
+
+  popupMenu1 = OptionMenu(frame, w_var, *w_materials)
+  menu = tk.Label(frame, text = "Choose the Workpiece Material", bg='#50c878')
+  menu.place(relx=0.01, rely=0.09)
+  popupMenu1.place(relx = 0.25, rely=0.085, relwidth=0.3, relheight=0.05)
+
+  def change_dropdown(*args):
+    w_var.get()
+
+  w_var.trace('w', change_dropdown)
+
+  t_var = StringVar(window)
+  t_materials = {'carbide','HSS'}
+  t_var.set('carbide')
+
+  popupMenu2 = OptionMenu(frame, t_var, *t_materials)
+  menu1 = tk.Label(frame, text="Choose Tool Material", bg="#50c878")
+  menu1.place(relx=0.01, rely=0.155)
+  popupMenu2.place(relx=0.25, rely = 0.155, relwidth=0.3, relheight=0.05)
+
+  def change_dropdown2(*arge):
+    t_var.get()
+
+  t_var.trace('w', change_dropdown2)
+
+
+  def generate(c, w_mat, t_mat):
+    global code 
+    global material 
+    global tool 
+    code = ast.literal_eval(c)
+    material = w_mat
+    tool = t_mat
+  button = tk.Button(frame, text = "Generate", bg='#006400',fg='#ffffff', 
+                   command = lambda: generate(code_entry.get(), w_var.get(), t_var.get()))
+  button.place(relx=0.4, rely=0.250, relwidth=0.2)
+
+  window.mainloop()
+  
+#print(code, material,tool)
+
+#--------------------------------------------------------------------------#
+
+
 #["operation","operation no.","length","diameter/angle","surface_Roughness"]
 
 #if threading check the previous and after operations for turning
 #if drilling check radial or axial
 
-#code = [['ch',1,3,45,'l'],['D',1,20,30,'A'],['T',1,25,50],['T',2,50,75],['T',3,35,80],['T',4,70,90]]   # component code
+#code = [['ch',1,2,45,'l'],['D',1,20,30,'A'],['T',1,25,50],['T',2,50,75],['T',3,35,80],['T',4,70,90]]   # component code
 #material = "Aluminium"
-
-
-window = tk.Tk()
-
-window.title("PROCESS PLANNING AND COST ESTIMATION")
-
-canvas = tk.Canvas(window, height=700, width=800)
-canvas.pack()
-
-frame = tk.Frame(window, bg='#50c878')
-frame.place(relx=0.01, rely=0.19, relwidth=0.98, relheight=0.8)
-
-label = tk.Label(window, text="CAPP ")
-label.config(font=("Ariel",70))
-label.place(relx=.5,rely=.1, anchor='center')
-
-label1 = tk.Label(window, text = r"(COMPUTER AIDED PROCESS PLANNING - Generative Type)")
-label1.place(relx=.5,rely=0.175, anchor='center')
-
-label_code = tk.Label(frame, text="Component Code : ", bg='#50c878', anchor='n')
-label_code.place(relx=0.01, rely=0.02)
-
-code_entry = tk.Entry(frame, font = 40)
-code_entry.config(font=("Ariel"))
-code_entry.place(relwidth = 0.65, relheight=0.05, relx=0.25, rely=0.01,)
-
-w_var = StringVar(window)
-w_materials = {'Low cabon steels','Medium carbon steels', 'Steel alloys', 'Grey cast iron'
-              ,'Stainless Steel','Chromium nickel','Aluminium','Brass','Plastics'}
-w_var.set('Low carbon steels')
-
-popupMenu1 = OptionMenu(frame, w_var, *w_materials)
-menu = tk.Label(frame, text = "Choose the Workpiece Material", bg='#50c878')
-menu.place(relx=0.01, rely=0.09)
-popupMenu1.place(relx = 0.25, rely=0.085, relwidth=0.3, relheight=0.05)
-
-def change_dropdown(*args):
-  w_var.get()
-
-w_var.trace('w', change_dropdown)
-
-t_var = StringVar(window)
-t_materials = {'carbide','HSS'}
-t_var.set('carbide')
-
-popupMenu2 = OptionMenu(frame, t_var, *t_materials)
-menu1 = tk.Label(frame, text="Choose Tool Material", bg="#50c878")
-menu1.place(relx=0.01, rely=0.155)
-popupMenu2.place(relx=0.25, rely = 0.155, relwidth=0.3, relheight=0.05)
-
-def change_dropdown2(*args):
-  t_var.get()
-
-t_var.trace('w', change_dropdown2)
-
-def generate(c, w_mat, t_mat):
-  global code
-  global material
-  global toolm
-
-  code = ast.literal_eval(c)
-  material = w_mat
-  toolm = t_mat
-
-button = tk.Button(frame, text = "Generate", bg='#006400',fg='#ffffff', 
-                   command = lambda: generate(code_entry.get(), w_var.get(), t_var.get()))
-button.place(relx=0.4, rely=0.250, relwidth=0.2)
-
-window.mainloop()
 
 operations = []
 operation1 = []
@@ -108,7 +114,7 @@ def split_opr(coded):
   operation2 = code[:c]
   del code[:c]
   return (osm(code) + osm(operation2))
-
+  
 # function to sequence the opertions
 def osm(coded):
   operations = []
@@ -116,18 +122,18 @@ def osm(coded):
     if(i[0]=='T'):
       operations.append(i)
     sequence=sorted(operations, key = itemgetter(3), reverse = True)
-
+    
   max_dia = sequence[0][3]
   for i in coded:
     if i not in sequence:
       sequence.append(i)
   return sequence
 
+# 2
 final_sequence = split_opr(code)
+print(final_sequence)
 
-#2
-
-# function that selects the tool for corresponding operations
+# function for selecting tool for corresponding operations
 def tool_m(c):
   if(c[0]=="T"):
     return "Carbide Insert"
@@ -185,10 +191,10 @@ def m_time(m_allowance, c):
     return (c[3]+(2*m))/(fr[-1]*sp[-1])
   else:
     return (c[3]+m_allowance)/(fr[-1]*sp[-1])
-
+  
 # function to calculate feed
-def feed(mat, Tool, c, p):
-
+def feed(material, Tool, c, p):
+  
   global rf_feed,ff_feed,d_feed,feed_d,rfr,ffr,dfr
 
   feed_r_drilling_carbide_HSS =[[2,0.15,0.05]
@@ -211,7 +217,7 @@ def feed(mat, Tool, c, p):
                           ,["Aluminium",0.2,1.0]
                           ,["Brass",0.15,1.5]
                           ,["Plastics",0.2,1.0]]
-
+  
   feed_r_turning_HSS_r_f = [["Low carbon steels",0.15,0.45]
                          ,["Medium carbon steels",0.15,0.4]
                          ,["Steel alloys",0.1,0.3]
@@ -226,24 +232,24 @@ def feed(mat, Tool, c, p):
     feed_t = feed_r_turning_carbide_r_f
   if(Tool == "HSS"):
     feed_t = feed_r_turning_HSS_r_f
-
+    
   feed_d = feed_r_drilling_carbide_HSS
-
+  
   if(Tool == "carbide"):
     v = 1
   if(Tool == "HSS"):
     v = 2
-
+    
   if(c[0]=="T"): 
     for Feeds in feed_t:
-      if(material == mat):
+      if(material == material):
         rf_feed = Feeds[1]
         ff_feed = Feeds[2]
         if(p=="r"):
           return rf_feed
         if(p=="f"):
           return ff_feed
-
+    
   if(c[0]=="D"):
     d = c[2]
     for feeds in feed_d:
@@ -251,15 +257,16 @@ def feed(mat, Tool, c, p):
         d_feed = feeds[v]
         continue   
     return d_feed
-
+  
   if(c[0]=="ch"):
     return ff_feed
+      
 
 #Surface cutting speeds in metres per minute
 def velocity(mat,Tool):
   global rm_speed
   global fm_speed
-
+  
   cutting_speed_carbide = [["Low carbon steels",60,230]
                          ,["Medium carbon steels",45,210]
                          ,["Steel alloys",60,170]
@@ -269,7 +276,7 @@ def velocity(mat,Tool):
                          ,["Aluminium",60,210]
                          ,["Brass",90,305]
                          ,["Plastics",50,230]]
-
+  
   cutting_speed_HSS =    [["Low carbon steels",20,110]
                          ,["Medium carbon steels",20,80]
                          ,["Steel alloys",20,80]
@@ -279,22 +286,22 @@ def velocity(mat,Tool):
                          ,["Aluminium",30,110]
                          ,["Brass",50,110]
                          ,["Plastics",30,150]]
-
+  
   if(Tool == "carbide"):
     speeds = cutting_speed_carbide
   if(Tool == "HSS"):
     speeds = cutting_speed_HSS
-
+    
   for speed in speeds:
-    if(speed[0]==mat):
+    if(speed[0]==material):
       rm_speed = speed[1]
       fm_speed = speed[2]
-
+           
 # calculating the required rpm values
 def rpm(material, Tool, c, p):
   global fm_rpm,rm_rpm
   velocity(material,Tool)
-
+  
   if(c[0]!="Tt"):
     rm_rpm = (1000*rm_speed)/(math.pi*c[3])
     fm_rpm = (1000*fm_speed)/(math.pi*c[3])
@@ -307,12 +314,12 @@ def rpm(material, Tool, c, p):
     fm_rpm = (1000*rm_speed)/(math.pi*((c[3]+c[4])/2))
 
 #3
-
+   
 route_sheet = []
 operation_sheet = []
 tooling_list = []
-mat = material
-tool = toolm
+#mat = material
+#tool = "carbide"
 m_a = 2 # machining allowance
 
 # machines and operations
@@ -329,6 +336,8 @@ def machines(c):
     if(c[4] =="R"):
       return "Drill Press"
 
+
+  
 # main function      
 def process_plan(coded):
   n = 0
@@ -336,12 +345,12 @@ def process_plan(coded):
   des_r.append("Cast Initial Geometry")
   W_centre.append("Foundry")
   M_tool.append("Investment Casting")
-
+  
   for i in coded:
     if(i[0]=='T'):
-      sp.append(rpm(mat,tool,i,"f"))
-      f.append(round(feed(mat,tool,i,"f")*sp[-1]/1000,2))
-      fr.append(feed(mat,tool,i,"f"))
+      sp.append(rpm(material,tool,i,"f"))
+      f.append(round(feed(material,tool,i,"f")*sp[-1]/1000,2))
+      fr.append(feed(material,tool,i,"f"))
       t_d.append(tooling(i))
       op_t.append(round(m_time(m_a,i),3))
       des.append("Turn " + u"\u2300" + str(i[3]) + " X " + str(i[2]) + "mm" )
@@ -359,11 +368,11 @@ def process_plan(coded):
       c_no.append(comp_no(i))
       t_m.append(tool_m(i))
       M_tool_o.append(machines(i))
-
+      
     if(i[0]=="ch"):
-      sp.append(rpm(mat,tool,i,"f"))
-      f.append(round(feed(mat,tool,i,"f")*sp[-1]/1000,2))
-      fr.append(feed(mat,tool,i,"f"))
+      sp.append(rpm(material,tool,i,"f"))
+      f.append(round(feed(material,tool,i,"f")*sp[-1]/1000,2))
+      fr.append(feed(material,tool,i,"f"))
       op_t.append(round(m_time(m_a,i),3))
       t_d.append(tooling(i))
       onr.append(onr[-1]+100)
@@ -378,11 +387,11 @@ def process_plan(coded):
       c_no.append(comp_no(i))
       t_m.append(tool_m(i))
       M_tool_o.append(machines(i))
-
+      
     if(i[0]=='D'):
-      sp.append(rpm(mat,tool,i,"f"))
-      f.append(round(feed(mat,tool,i,"f")*sp[-1]/1000,2))
-      fr.append(feed(mat,tool,i,"f"))
+      sp.append(rpm(material,tool,i,"f"))
+      f.append(round(feed(material,tool,i,"f")*sp[-1]/1000,2))
+      fr.append(feed(material,tool,i,"f"))
       op_t.append(round(m_time(m_a,i),3))
       t_d.append(tooling(i))
       t_n.append(tool_no(i))
@@ -403,9 +412,9 @@ def process_plan(coded):
       t_m.append(tool_m(i))
       ont.append(onr[-1]+10)
     if(i[0]=='S'):
-      sp.append(rpm(mat,tool,i,"f"))
-      f.append(round(feed(mat,tool,i,"f")*sp[-1]/1000,2))
-      fr.append(feed(mat,tool,i,"f"))
+      sp.append(rpm(material,tool,i,"f"))
+      f.append(round(feed(material,tool,i,"f")*sp[-1]/1000,2))
+      fr.append(feed(material,tool,i,"f"))
       op_t.append(round(m_time(m_a,i),3))
       t_d.append(tooling(i))
       onr.append(onr[-1]+100)
@@ -456,7 +465,7 @@ for k in range(len(ono)):
 for l in range(len(ont)):
   tooling_list.append([ont[l], t_n[l], of_n[l], c_no[l], t_d[l], t_m[l]])
 
-#4
+  #4
 
 r = PrettyTable()
 o = PrettyTable()
@@ -475,13 +484,10 @@ for items in operation_sheet:
   o.add_row(items)
 for items in tooling_list:
   t.add_row(items)
-
+  
 print("\n\n" + start + "ROUTE SHEET".center(150,"-") + end + "\n")
 print(r)
 print("\n\n" + start + "OPERATION SHEET".center(150,"-") + end + "\n")
 print(o)
 print("\n\n" + start + "TOOLING LIST".center(150,"-") + end + "\n")
 print(t)
-  
-label_r = tk.Label(frame, text=r, bg='#50c878', anchor='n')
-label_r.place(relx=0.01, rely=0.5)
