@@ -2,7 +2,7 @@
 This is my undergrad assignment work in a subject called Process Planning and Cost Estimation. 
 Its kinda semi-generative CAPP for shaft like components.
 
-This code is written and tested in Colaboratory. Connect to local Runtime before execution.
+This code is written and tested in Google Colaboratory. Connect to local Runtime before execution.
 
 Before using it you have to know how to code a shaft, which is the input for the program.
 You can easily understand it.
