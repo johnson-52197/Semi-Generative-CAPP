@@ -31,3 +31,4 @@ code = [['ch',1,3,45,'l'],['D',1,20,30,'A'],['T',1,25,50],['T',2,50,75],['T',3,3
  All the data used in the code is taken from the book "Process planning" by Peter Scallan.
  
  Import all the necessary libraries before executing.
+
