@@ -26,29 +26,8 @@ code = [['ch',1,3,45,'l'],['D',1,20,30,'A'],['T',1,25,50],['T',2,50,75],['T',3,3
  l - left side.
  
  the shaft is coded as per the operations to be done on it.
- From left to right.                                                                                                       ________________________T4_90______________________
-                                                                                                                          |                                                    \ 
-                                    _________________T2_75________________                                                |                                                    |
-                                   |                                      |                                               |                                                    |
-                                   |                                      |_____________________T3_80_____________________|                                                    |
-                                   |                                                                                                                                           |
-    ___________T1_50_______________|                                                                                                                                           |
-   /                                                                                                                                                                           |
-  |_  _  _ 30 _ _                                                                                                                                                              |
-  |              |                                                                                                                                                             |
-- - 20 - - -  -  A  -  -  25 -  -  -  -  -  -  -  - 50 -  -  -  -  -  -  -  -  -  -  -  -  -  -  35  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - 70  -  -  -  -  -  -  -  - |
-  |_  _  _  _  _ |                                                                                                                                                             |
-  |   Drilling                                                                                                                                                                 |
-   \________________________________                                                                                                                                           |
-chamfer           Turning           |                                                                                                                                          |
-                                    |                                     __________________________________________________                                                   |
-                                    |                                    |                     Turning                      |                                                  |
-                                    |____________________________________|                                                  |                                                  |
-                                                   Turning                                                                  |                                                  |
-                                                                                                                            |_________________________________________________ /
-                                                                                                                                                Turning                  Chamfer
-                                                                                                                                                
-                                                                                                                                             NOT TO SCALE
+ From left to right.                                                                                                       
+	
  All the data used in the code is taken from the book "Process planning" by Peter Scallan.
  
  Import all the necessary libraries before executing.
